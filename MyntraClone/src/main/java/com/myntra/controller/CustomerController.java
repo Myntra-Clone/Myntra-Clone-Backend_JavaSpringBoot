@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myntra.dto.CustomerDto;
+import com.myntra.entity.Address;
 import com.myntra.exception.MyntraException;
 import com.myntra.service.CustomerService;
 
@@ -27,11 +28,14 @@ public class CustomerController {
 	//Registering A User
 	@PostMapping("/register")
 	public ResponseEntity<String> customerRegisterApi(@Valid @RequestBody CustomerDto customerDto) throws MyntraException{
-		
 		String registeredEmail=customerService.registerNewCustomer(customerDto);
-		registeredEmail=environment.getProperty("CUSTOMER.REGISTERED"+registeredEmail);
+		registeredEmail=environment.getProperty("CUSTOMER.REGISTERED")+registeredEmail;
 		return new ResponseEntity<>(registeredEmail, HttpStatus.CREATED);
 		
 	}
+	
+	
 
 }
+
+

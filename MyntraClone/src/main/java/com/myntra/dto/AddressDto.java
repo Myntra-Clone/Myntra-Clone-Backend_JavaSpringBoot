@@ -32,6 +32,11 @@ public class AddressDto {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
+
+	@Override
+	public String toString() {
+		return "AddressDto [name=" + name + ", emailId=" + emailId + "]";
+	}
 	
 	
 	
