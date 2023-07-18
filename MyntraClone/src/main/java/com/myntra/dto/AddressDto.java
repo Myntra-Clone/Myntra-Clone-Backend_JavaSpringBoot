@@ -1,69 +1,33 @@
 package com.myntra.dto;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 
 public class AddressDto {
-
 	@NotNull
 	private String name;
 	private String emailId;
+	private String addressLine1;
+	@NotNull
+	private Long pincode;
+	private String state;
+	private String locality;
+	private String city;
+	private String addressType;
 
 	public AddressDto() {
 	}
 
-	public AddressDto(@NotNull String name, String emailId) {
+	public AddressDto(@NotNull String name, String emailId, String addressLine1,@NotNull Long pincode, String state, String locality,
+			String city, String addressType) {
 		super();
 		this.name = name;
 		this.emailId = emailId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	@Override
-	public String toString() {
-		return "AddressDto [name=" + name + ", emailId=" + emailId + "]";
-	}
-	
-	
-	
-	
-	
-	
-	/*
-	private String houseNumber;
-	@NotNull
-	private Long pincode;
-	@NotNull
-	private String state;
-	private String locality;
-	private String city;
-	
-	public AddressDto() {}
-
-	public AddressDto(@NotNull String name, String emailId, String houseNumber, @NotNull Long pincode,
-			@NotNull String state, String locality, String city) {
-		super();
-		this.name = name;
-		this.emailId = emailId;
-		this.houseNumber = houseNumber;
+		this.addressLine1 = addressLine1;
 		this.pincode = pincode;
 		this.state = state;
 		this.locality = locality;
 		this.city = city;
+		this.addressType = addressType;
 	}
 
 	public String getName() {
@@ -82,12 +46,12 @@ public class AddressDto {
 		this.emailId = emailId;
 	}
 
-	public String getHouseNumber() {
-		return houseNumber;
+	public String getAddressLine1() {
+		return addressLine1;
 	}
 
-	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
+	public void setAddressLine1(String addressLine1) {
+		this.addressLine1 = addressLine1;
 	}
 
 	public Long getPincode() {
@@ -121,12 +85,14 @@ public class AddressDto {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	
-	*/
-	
-	
-	
-	
-	
-	
+
+	public String getAddressType() {
+		return addressType;
+	}
+
+	public void setAddressType(String addressType) {
+		this.addressType = addressType;
+	}
+
+
 }

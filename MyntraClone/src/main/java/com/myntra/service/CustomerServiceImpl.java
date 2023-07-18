@@ -25,6 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 		if (registeredEmail) {
 			Customer customer = modelMapper.map(customerDto, Customer.class);
 			customerRepository.save(customer);
+			customerRepository.fin
 		} else {
 			throw new MyntraException("EMAIL.ALREADY.EXISTS");
 		}

@@ -2,6 +2,9 @@ package com.myntra.entity;
 
 import java.util.Arrays;
 import java.util.List;
+
+import javax.validation.constraints.Pattern;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,19 +16,17 @@ public class Customer {
 	private String name;
 	private String password;
 	private Long phoneNumber;
-	private Address[] address;
 
 	public Customer() {
 	}
 
 
-	public Customer(String email, String name, String password, Long phoneNumber, Address[] address) {
+	public Customer(String email, String name, String password, Long phoneNumber) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
-		this.address = address;
 	}
 
 
@@ -62,21 +63,10 @@ public class Customer {
 		this.phoneNumber = phoneNumber;
 	}
 
-
-	public Address[] getAddress() {
-		return address;
-	}
-
-
-	public void setAddress(Address[] address) {
-		this.address = address;
-	}
-
-
 	@Override
 	public String toString() {
 		return "Customer [email=" + email + ", name=" + name + ", password=" + password + ", phoneNumber=" + phoneNumber
-				+ ", address=" + Arrays.toString(address) + "]";
+				+"]";
 	}
 
 	

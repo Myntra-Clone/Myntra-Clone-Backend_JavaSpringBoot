@@ -1,10 +1,10 @@
+
 package com.myntra.dto;
 
-import java.util.Arrays;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class CustomerDto {
 
@@ -14,26 +14,21 @@ public class CustomerDto {
 	@NotNull
 	private String name;
 	@NotNull
+	@Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}")
 	private String password;
 	private Long phoneNumber;
-	private AddressDto[] addressDto;
 
 	public CustomerDto() {
 	}
 
-	
-
-	public CustomerDto(@NotBlank @Email String email, @NotNull String name, @NotNull String password, Long phoneNumber,
-			AddressDto[] addressDto) {
+	public CustomerDto(@NotBlank @Email String email, @NotNull String name, @NotNull String password,
+			Long phoneNumber) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
-		this.addressDto = addressDto;
 	}
-
-
 
 	public String getEmail() {
 		return email;
@@ -55,13 +50,9 @@ public class CustomerDto {
 		return password;
 	}
 
-
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
 
 	public Long getPhoneNumber() {
 		return phoneNumber;
@@ -71,23 +62,10 @@ public class CustomerDto {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public AddressDto[] getAddress() {
-		return addressDto;
-	}
-
-
-	public void setAddress(AddressDto[] address) {
-		this.addressDto = address;
-	}
-
-
-
 	@Override
 	public String toString() {
 		return "CustomerDto [email=" + email + ", name=" + name + ", password=" + password + ", phoneNumber="
-				+ phoneNumber + ", addressDto=" + Arrays.toString(addressDto) + "]";
+				+ phoneNumber + "]";
 	}
-	
-	
 
 }

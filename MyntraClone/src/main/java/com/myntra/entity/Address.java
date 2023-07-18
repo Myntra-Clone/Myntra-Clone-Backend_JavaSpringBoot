@@ -1,64 +1,33 @@
 package com.myntra.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "CustomerAddressS")
 public class Address {
 
 	private String name;
 	private String emailId;
-	
-	public Address(){}
-	
-	
-	public Address(String name, String emailId) {
-		super();
-		this.name = name;
-		this.emailId = emailId;
-	}
-	
-
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Address [name=" + name + ", emailId=" + emailId + "]";
-	}
-	
-	/*
-	private String houseNumber;
+	private String addressLine1;
 	private Long pincode;
 	private String state;
 	private String locality;
 	private String city;
-	
-	public Address() {}
+	private String addressType;
 
-	public Address(String name, String emailId, String houseNumber, Long pincode, String state, String locality,
-			String city) {
+	public Address() {
+	}
+
+	public Address(String name, String emailId, String addressLine1, Long pincode, String state, String locality,
+			String city, String addressType) {
 		super();
 		this.name = name;
 		this.emailId = emailId;
-		this.houseNumber = houseNumber;
+		this.addressLine1 = addressLine1;
 		this.pincode = pincode;
 		this.state = state;
 		this.locality = locality;
 		this.city = city;
+		this.addressType = addressType;
 	}
 
 	public String getName() {
@@ -77,12 +46,12 @@ public class Address {
 		this.emailId = emailId;
 	}
 
-	public String getHouseNumber() {
-		return houseNumber;
+	public String getAddressLine1() {
+		return addressLine1;
 	}
 
-	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
+	public void setAddressLine1(String addressLine1) {
+		this.addressLine1 = addressLine1;
 	}
 
 	public Long getPincode() {
@@ -116,9 +85,13 @@ public class Address {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	
-	*/
-	
-	
-	
+
+	public String getAddressType() {
+		return addressType;
+	}
+
+	public void setAddressType(String addressType) {
+		this.addressType = addressType;
+	}
+
 }
