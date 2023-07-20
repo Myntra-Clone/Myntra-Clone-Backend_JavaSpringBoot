@@ -38,7 +38,13 @@ public class CustomerController {
 		
 	}
 	
-	
+	//Login with email id & password
+	@PostMapping("/login")
+	@ApiOperation(value = "Login with user Credentials", response = String.class)
+	public ResponseEntity<String> customerLoginApi(@Valid @RequestBody CustomerDto customerDto) throws MyntraException{
+		
+		return null;
+
 
 }
 

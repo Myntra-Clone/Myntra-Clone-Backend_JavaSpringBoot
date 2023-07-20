@@ -7,4 +7,5 @@ import com.myntra.entity.Customer;
 @Repository
 public interface CustomerRepository extends MongoRepository<Customer, String> {
 
+    Optional<String> findByEmail(String email);
 }
