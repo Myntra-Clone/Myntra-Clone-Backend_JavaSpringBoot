@@ -1,14 +1,19 @@
 package com.myntra.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class Login {
+@Document(collection = "Authentication")
+public class CustomerAuth {
 
+	@Id
 	private String email;
 	private String password;
-	
-	public Login() {}
 
-	public Login(String email, String password) {
+	public CustomerAuth() {
+	}
+
+	public CustomerAuth(String email, String password) {
 		super();
 		this.email = email;
 		this.password = password;
@@ -29,7 +34,10 @@ public class Login {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "CustomerAuth [email=" + email + ", password=" + password + "]";
+	}
+
 }

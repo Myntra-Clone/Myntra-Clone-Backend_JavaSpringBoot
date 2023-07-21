@@ -14,7 +14,7 @@ public class CustomerDto {
 	@NotNull
 	private String name;
 	@NotNull
-	@Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}")
+	@Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}",message = "Password Format does not match")
 	private String password;
 	private Long phoneNumber;
 

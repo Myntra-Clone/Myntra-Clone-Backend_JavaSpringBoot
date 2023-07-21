@@ -1,11 +1,7 @@
 package com.myntra.entity;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.validation.constraints.Pattern;
-
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Customer")
@@ -14,12 +10,12 @@ public class Customer {
 	@Id
 	private String email;
 	private String name;
+	@Transient
 	private String password;
 	private Long phoneNumber;
 
 	public Customer() {
 	}
-
 
 	public Customer(String email, String name, String password, Long phoneNumber) {
 		super();
@@ -28,8 +24,6 @@ public class Customer {
 		this.password = password;
 		this.phoneNumber = phoneNumber;
 	}
-
-
 
 	public String getEmail() {
 		return email;
@@ -66,9 +60,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [email=" + email + ", name=" + name + ", password=" + password + ", phoneNumber=" + phoneNumber
-				+"]";
+				+ "]";
 	}
-
-	
 
 }
