@@ -6,14 +6,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.myntra.entity.CustomerAuth;
 
-public class UserDetailsInfo implements UserDetails {
-
-	private static final long serialVersionUID = 1L;
+public class CustomUserDetails implements UserDetails {
 
 	private String email;
 	private String password;
 
-	public UserDetailsInfo(CustomerAuth customerAuth) {
+	public CustomUserDetails(CustomerAuth customerAuth) {
 		this.email = customerAuth.getEmail();
 		this.password = customerAuth.getPassword();
 	}
