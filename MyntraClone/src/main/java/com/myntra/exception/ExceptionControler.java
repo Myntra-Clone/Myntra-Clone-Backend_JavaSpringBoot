@@ -3,6 +3,8 @@ package com.myntra.exception;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -48,5 +50,12 @@ public class ExceptionControler {
         List<String> exception=new ArrayList<>();
         ex.getBindingResult().getFieldErrors().forEach(error ->exception.add(error.getDefaultMessage()));
 
-        return new ResponseEntity<>(exception,HttpStatus.BAD_REQUEST) ;   }
+        return new ResponseEntity<>(exception,HttpStatus.BAD_REQUEST) ;   
+        }
+	
+	@ExceptionHandler
+	public ResponseEntity<String> servletException(ServletException ex) {
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+	}
 }

@@ -10,7 +10,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @PropertySource(value = { "classpath:messages.properties" })
 @EnableWebMvc
 @EnableSwagger2
-
 public class MyntraCloneApplication {
 
 	public static void main(String[] args) {

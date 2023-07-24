@@ -1,12 +1,16 @@
 package com.myntra.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.myntra.Constants;
+import com.myntra.exception.MyntraException;
 import com.myntra.service.CustomUserDetailsService;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -27,10 +31,10 @@ public class JwtFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String authHeader = request.getHeader("Authorization");
-		System.out.println(authHeader);
 		String token = null;
 		String username = null;
-		if (authHeader != null && authHeader.startsWith("Bearer ")) {
+		try {
+		if (authHeader != null && authHeader.startsWith(Constants.JWT_HEADER_PREFIX)) {
 			token = authHeader.substring(7);
 			username = jwtHelper.extractUserName(token);
 		}
@@ -44,5 +48,9 @@ public class JwtFilter extends OncePerRequestFilter {
 			}
 		}
 		filterChain.doFilter(request, response);
+	}
+	catch(Exception ex) {
+		throw new ServletException(ex);
+	}
 	}
 }

@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.myntra.Constants;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,9 +18,6 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtHelper {
-
-	public static final Long VALIDITY = 1000 * 60 * 60 * 5L;
-	public static final String SECRET = "YhiD5iVhUuArth8thDavM/H7LH6oGAck6QTbkIfTXcLEG+hRWsVmUou+XoyfiIND";
 
 	public Date extractExpiration(String token) {
 		return extractClaim(token, Claims::getExpiration);
@@ -55,12 +55,12 @@ public class JwtHelper {
 				.setClaims(claims)
 				.setSubject(email)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + VALIDITY))
+				.setExpiration(new Date(System.currentTimeMillis() + Constants.JWT_VALIDITY))
 				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
 	}
 
 	private Key getSignKey() {
-		byte[] key = Decoders.BASE64.decode(SECRET);
+		byte[] key = Decoders.BASE64.decode(Constants.JWT_SECRET);
 		return Keys.hmacShaKeyFor(key);
 	}
 }

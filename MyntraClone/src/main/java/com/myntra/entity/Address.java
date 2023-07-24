@@ -13,8 +13,9 @@ import lombok.Setter;
 @Document(collection = "CustomerAddressS")
 public class Address {
 
+	private String userIdEmail;
 	private String name;
-	private String emailId;
+	private String addressEmail;
 	private String addressLine1;
 	private Long pincode;
 	private String state;
