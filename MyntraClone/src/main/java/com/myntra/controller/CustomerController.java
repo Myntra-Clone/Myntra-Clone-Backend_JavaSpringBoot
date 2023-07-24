@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/auth")
-@Api(value = "Customer Controller : REST APIs")
+@Api(value = "Customer Controller : REST APIs") //    http://localhost:8500/myntra/swagger-ui/index.html#/
 public class CustomerController {
 
 	@Autowired
