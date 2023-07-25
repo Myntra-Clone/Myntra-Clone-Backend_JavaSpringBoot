@@ -49,7 +49,7 @@ public class CustomerController {
 	AuthenticationManager authenticationManager;
 
 	@Autowired
-	RestTemplate restTemplate;
+	RestTemplate restTemplate; 
 
 	@PostMapping("/is-present")
 	@ApiOperation(value = "To check if email id is present in database", response = Boolean.class)
