@@ -16,15 +16,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 import com.myntra.dto.CustomerAuthDto;
 import com.myntra.dto.CustomerDto;
 import com.myntra.dto.JwtTokens;
+import com.myntra.dto.OtpDetailsDto;
 import com.myntra.dto.StringInputDto;
 import com.myntra.exception.MyntraException;
 import com.myntra.security.JwtHelper;
-import com.myntra.service.CustomerService;
-import com.myntra.service.RefreshTokenService;
+import com.myntra.service.declaration.CustomerService;
+import com.myntra.service.declaration.RefreshTokenService;
+import com.myntra.service.declaration.OtpService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -49,12 +51,32 @@ public class CustomerController {
 	AuthenticationManager authenticationManager;
 
 	@Autowired
-	RestTemplate restTemplate;
+	OtpService otpService;
+
 
 	@PostMapping("/is-present")
 	@ApiOperation(value = "To check if email id is present in database", response = Boolean.class)
 	public ResponseEntity<Boolean> customerIsPresent(@RequestBody @NotBlank StringInputDto stringInputDto) {
 		return new ResponseEntity<>(customerService.isPresent(stringInputDto), HttpStatus.OK);
+	}
+	
+	@PostMapping("/generate-otp")
+	@ApiOperation(value = "To generate Otp for email validation", response = String.class)
+	public ResponseEntity<String> generateEmailOtp(@RequestBody @NotBlank StringInputDto email){
+		Integer otp = otpService.generateOtp(email);
+		otpService.sendOtpByEmail(email.getInput(),otp.toString());
+		return new ResponseEntity<>(environment.getProperty("OTP.SENT")+email.getInput(),HttpStatus.OK);
+	}
+	
+	@PostMapping("/validate-otp")
+	@ApiOperation(value = "To validate Otp for email validation", response = Boolean.class)
+	public ResponseEntity<String> validateEmailOtp(@RequestBody OtpDetailsDto otpDetailsDto ){
+		boolean validated = otpService.validateOtp(otpDetailsDto);
+		if(validated) {
+		return new ResponseEntity<>(environment.getProperty("OTP.VALIDATED"),HttpStatus.OK);
+		}else {
+		return new ResponseEntity<>(environment.getProperty("OTP.INVALID"),HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PostMapping("/register")
@@ -62,11 +84,15 @@ public class CustomerController {
 	public ResponseEntity<JwtTokens> customerRegisterApi(@Valid @RequestBody CustomerDto customerDto)
 			throws MyntraException {
 		customerService.registerNewCustomer(customerDto);
-		ResponseEntity<JwtTokens> jwtTokens = restTemplate.postForEntity(
-				environment.getProperty("HOST.URL") + "/auth/login",
-				new CustomerAuthDto(customerDto.getEmail(), customerDto.getPassword()), JwtTokens.class);
-		return jwtTokens;
-
+		if (authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(customerDto.getEmail(), customerDto.getPassword()))
+				.isAuthenticated()) {
+			String jwtToken = jwtHelper.generateToken(customerDto.getEmail());
+			String refreshToken = refreshTokenService.getRefreshToken(customerDto.getEmail());
+			return new ResponseEntity<>(new JwtTokens(jwtToken, refreshToken), HttpStatus.OK);
+		} else {
+			throw new BadCredentialsException("INVALID.CREDENTIAL");
+		}
 	}
 
 	// Login with email id & password

@@ -1,4 +1,4 @@
-package com.myntra.service;
+package com.myntra.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import com.myntra.entity.Customer;
 import com.myntra.exception.MyntraException;
 import com.myntra.repository.CustomerAuthRepository;
 import com.myntra.repository.CustomerRepository;
+import com.myntra.service.declaration.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {

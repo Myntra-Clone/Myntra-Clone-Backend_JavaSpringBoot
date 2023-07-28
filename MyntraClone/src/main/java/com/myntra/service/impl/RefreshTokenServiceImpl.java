@@ -1,4 +1,4 @@
-package com.myntra.service;
+package com.myntra.service.impl;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -11,6 +11,7 @@ import com.myntra.entity.JwtRefreshToken;
 import com.myntra.entity.StringInput;
 import com.myntra.exception.MyntraException;
 import com.myntra.repository.RefreshTokenRepository;
+import com.myntra.service.declaration.RefreshTokenService;
 
 @Service
 public class RefreshTokenServiceImpl implements RefreshTokenService {
