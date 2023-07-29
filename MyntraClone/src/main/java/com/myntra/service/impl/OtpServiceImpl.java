@@ -52,7 +52,7 @@ public class OtpServiceImpl implements OtpService{
 	@Override
 	public void sendOtpByEmail(String email, String otp) {
 		SimpleMailMessage message=new SimpleMailMessage();
-		message.setFrom("myntraotp@outlook.in");
+		message.setFrom("onetimepassword_otp@outlook.in");
 		message.setTo(email);
 		message.setSubject("OTP from Myntra to verify Email");
 		message.setText("Your OTP to verify email  "+email+" is:\r\n "+otp+"\r\nIt is valid for 5 minutes.");

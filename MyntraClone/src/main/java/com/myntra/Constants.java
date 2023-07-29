@@ -15,6 +15,6 @@ public class Constants {
 	/**
 	 * @param Email OTP Validity in Minute.
 	 */
-	public static final Long OTP_VALIDITY = 5L;
+	public static final Long OTP_VALIDITY = 60L;
 
 }
