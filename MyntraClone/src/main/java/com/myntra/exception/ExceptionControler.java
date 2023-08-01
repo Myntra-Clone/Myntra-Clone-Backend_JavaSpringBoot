@@ -41,7 +41,7 @@ public class ExceptionControler {
 	
 	@ExceptionHandler
 	public ResponseEntity<String> credentialException(BadCredentialsException ex) {
-		return new ResponseEntity<>(environment.getProperty("INVALID.CREDENTIAL"), HttpStatus.OK);
+		return new ResponseEntity<>(environment.getProperty("INVALID.CREDENTIAL"), HttpStatus.BAD_REQUEST);
 
 	}
 	

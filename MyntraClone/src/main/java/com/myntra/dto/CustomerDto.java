@@ -21,5 +21,7 @@ public class CustomerDto {
 	@NotNull(message = "Password can not be null")
 	private String password;
 	private Long phoneNumber;
+	private String gender;
+
 
 }

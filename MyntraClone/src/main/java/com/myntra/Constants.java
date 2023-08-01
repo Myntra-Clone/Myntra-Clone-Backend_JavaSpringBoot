@@ -5,16 +5,15 @@ public class Constants {
 	/**
 	 * @param JWT Token Validity in Millisecond.
 	 */
-	public static final Long JWT_VALIDITY = 1000 * 30L;
+	public static final Long JWT_VALIDITY = 1000 * 60*5L;
 	public static final String JWT_SECRET = "YhiD5iVhUuArth8thDavM/H7LH6oGAck6QTbkIfTXcLEG+hRWsVmUou+XoyfiIND";
 	public static final String JWT_HEADER_PREFIX = "Bearer ";
 	/**
 	 * @param Refresh Token Validity in Millisecond.
 	 */
-	public static final int REFRESH_TOKEN_VALIDITY = 1000 * 60;
+	public static final int REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24;
 	/**
 	 * @param Email OTP Validity in Minute.
 	 */
 	public static final Long OTP_VALIDITY = 60L;
-
 }

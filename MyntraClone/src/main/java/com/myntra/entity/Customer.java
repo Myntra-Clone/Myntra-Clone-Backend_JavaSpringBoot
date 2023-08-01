@@ -21,5 +21,6 @@ public class Customer {
 	@Transient
 	private String password;
 	private Long phoneNumber;
+	private String gender;
 
 }

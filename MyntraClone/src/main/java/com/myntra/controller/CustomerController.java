@@ -3,7 +3,6 @@ package com.myntra.controller;
 import java.security.Principal;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -91,7 +90,7 @@ public class CustomerController {
 			String refreshToken = refreshTokenService.getRefreshToken(customerDto.getEmail());
 			return new ResponseEntity<>(new JwtTokens(jwtToken, refreshToken), HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(environment.getProperty("INVALID.CREDENTIAL"),HttpStatus.OK);
+			return new ResponseEntity<>(environment.getProperty("INVALID.CREDENTIAL"),HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -107,7 +106,7 @@ public class CustomerController {
 			String refreshToken = refreshTokenService.getRefreshToken(customerAuthDto.getEmail());
 			return new ResponseEntity<>(new JwtTokens(jwtToken, refreshToken), HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(environment.getProperty("INVALID.CREDENTIAL"),HttpStatus.OK);
+			return new ResponseEntity<>(environment.getProperty("INVALID.CREDENTIAL"),HttpStatus.BAD_REQUEST);
 		}
 	}
 
