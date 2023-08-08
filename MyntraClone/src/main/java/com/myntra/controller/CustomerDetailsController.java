@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,7 @@ import com.myntra.dto.CustomerDto;
 import com.myntra.dto.StringInputDto;
 import com.myntra.exception.MyntraException;
 import com.myntra.service.declaration.CustomerDetailsService;
+import com.myntra.service.declaration.RefreshTokenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -31,7 +33,18 @@ public class CustomerDetailsController {
 	CustomerDetailsService customerDetailsService;
 	@Autowired
 	AuthenticationManager authenticationManager;
+	@Autowired
+	RefreshTokenService refreshTokenService;
+	@Autowired
+	Environment environment;
 
+	@PostMapping("/logout")
+	@ApiOperation(value = "user logout", response = String.class)
+	public ResponseEntity<String> logoutApi(@RequestBody @NotBlank StringInputDto stringInputDto) {
+		refreshTokenService.deleteToken(stringInputDto.getInput());
+		return new ResponseEntity<>(environment.getProperty("LOGGED.OUT"), HttpStatus.OK);
+	}
+	
 	@GetMapping("/acc-details")
 	@ApiOperation(value = "To check user account details", response = CustomerDto.class)
 	public ResponseEntity<CustomerDto> customerDetails(Principal principal){
@@ -51,13 +64,13 @@ public class CustomerDetailsController {
 	}
 	
 	@PostMapping("/add-address")
-	@ApiOperation(value = "To add user addresses", response = Boolean.class)
+	@ApiOperation(value = "To add user addresses", response = AddressDto.class)
 	public ResponseEntity<AddressDto> addAddress(@RequestBody AddressDto addressDto)throws MyntraException {
 		return new ResponseEntity<>(customerDetailsService.addAddress(addressDto),HttpStatus.OK);
 	}
 	
 	@GetMapping("/getAlladdress")
-	@ApiOperation(value = "To get all user addresses for an account", response = Boolean.class)
+	@ApiOperation(value = "To get all user addresses for an account", response = AddressDto.class)
 	public ResponseEntity<List<AddressDto>> getAddress()throws MyntraException {
 		return new ResponseEntity<>(customerDetailsService.getAddress(),HttpStatus.OK);
 	}

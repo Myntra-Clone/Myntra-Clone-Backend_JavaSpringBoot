@@ -10,11 +10,13 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import com.myntra.service.CustomUserDetailsService;
 
@@ -24,6 +26,8 @@ public class SecurityConfig {
 
 	@Autowired
 	JwtFilter jwtFilter;
+	@Autowired
+	LogoutHandler logoutHandler;
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -53,7 +57,13 @@ public class SecurityConfig {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.authenticationProvider(authenticationProvider())
-				.addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class).build();
+				.addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class)
+				.logout()
+				.logoutUrl("myntra/my/logout")
+				.addLogoutHandler(logoutHandler)
+				.logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext() )
+				.and()
+				.build();
 	}
 
 	@Bean

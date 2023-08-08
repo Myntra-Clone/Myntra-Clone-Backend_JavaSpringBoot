@@ -40,8 +40,9 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 			refreshTokenRepository.deleteById(refreshtoken.getEmail());
 			throw new MyntraException("TOKEN.INVALID", HttpStatus.BAD_REQUEST);
 		}
-
 	}
+	
+	
 
 	@Scheduled(fixedDelay = Constants.FIXED_DELAY)
 	private void cleanup() {
@@ -50,5 +51,10 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 				refreshTokenRepository.delete(token);
 			}
 		});
+	}
+
+	@Override
+	public void deleteToken(String input) {
+		refreshTokenRepository.deleteById(input);
 	}
 }
