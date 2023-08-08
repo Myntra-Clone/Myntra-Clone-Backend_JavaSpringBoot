@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressDto {
+	private int addId;
 	@NotNull
 	private String name;
 	private String emailId;

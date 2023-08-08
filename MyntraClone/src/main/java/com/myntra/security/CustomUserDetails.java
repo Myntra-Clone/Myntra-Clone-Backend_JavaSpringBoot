@@ -8,6 +8,11 @@ import com.myntra.entity.CustomerAuth;
 
 public class CustomUserDetails implements UserDetails {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7397872130291810640L;
+	
 	private String email;
 	private String password;
 

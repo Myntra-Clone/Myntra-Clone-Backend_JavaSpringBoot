@@ -2,7 +2,6 @@ package com.myntra.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,9 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.myntra.dto.AddressDto;
-import com.myntra.dto.CustomerAuthDto;
 import com.myntra.dto.CustomerDto;
 import com.myntra.dto.StringInputDto;
 import com.myntra.entity.Address;
@@ -26,6 +25,7 @@ import com.myntra.repository.CustomerRepository;
 import com.myntra.service.declaration.CustomerDetailsService;
 
 @Service
+@Transactional
 public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 	@Autowired
@@ -51,7 +51,7 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	
 	@Override
 	public CustomerDto customerDetails(String email) {
-		Customer customer = customerRepository.findById(email).get();
+		Customer customer = customerRepository.findByEmail(email).get();
 		return modelMapper.map(customer,CustomerDto.class) ;
 	}
 
@@ -78,8 +78,9 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	public AddressDto addAddress(AddressDto addressDto) throws MyntraException {
 		Address address=modelMapper.map(addressDto,Address.class);
 		address.setUserIdEmail(getUser());
-		addressRepository.save(address);
-		return addressDto;
+		address.setAddCustomer(customerRepository.findByEmail(getUser()).get());
+		address= addressRepository.save(address);
+		return modelMapper.map(address, AddressDto.class);
 	}
 
 	@Override
@@ -90,6 +91,12 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 			addDto.add(modelMapper.map(address2,AddressDto.class));
 		}
 		return addDto;
+	}
+
+	@Override
+	public Boolean deleteAcc() throws MyntraException {
+		customerRepository.delete(customerRepository.findByEmail(getUser()).get());
+		return true;
 	}
 
 }

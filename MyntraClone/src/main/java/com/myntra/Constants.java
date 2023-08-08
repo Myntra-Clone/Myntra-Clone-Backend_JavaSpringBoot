@@ -3,17 +3,26 @@ package com.myntra;
 public class Constants {
 
 	/**
-	 * @param JWT Token Validity in Millisecond.
+	 * JWT Token Validity in Millisecond.
+	 * Current Time : 30Min
+	 * 
 	 */
-	public static final Long JWT_VALIDITY = 1000 * 60*5L;
+	public static final Long JWT_VALIDITY = 1000 * 60*30L;
 	public static final String JWT_SECRET = "YhiD5iVhUuArth8thDavM/H7LH6oGAck6QTbkIfTXcLEG+hRWsVmUou+XoyfiIND";
 	public static final String JWT_HEADER_PREFIX = "Bearer ";
 	/**
-	 * @param Refresh Token Validity in Millisecond.
+	 * Refresh Token Validity in Millisecond.
+	 * Current Time : 1 day
 	 */
 	public static final int REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24;
 	/**
-	 * @param Email OTP Validity in Minute.
+	 *  Email OTP Validity in Minute.
+	 *  Current Time : 60Min
 	 */
 	public static final Long OTP_VALIDITY = 60L;
+	/**
+	 *  DB cleanup process in Milliseconds
+	 *  Current Time : 1hour
+	 */
+	public static final long FIXED_DELAY = 1000*60*60*1;
 }

@@ -1,8 +1,13 @@
 
 package com.myntra.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.myntra.entity.Address;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +27,5 @@ public class CustomerDto {
 	private String password;
 	private Long phoneNumber;
 	private String gender;
-
 
 }

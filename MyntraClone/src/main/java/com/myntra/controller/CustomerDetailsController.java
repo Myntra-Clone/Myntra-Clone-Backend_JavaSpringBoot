@@ -2,13 +2,12 @@ package com.myntra.controller;
 
 import java.security.Principal;
 import java.util.List;
-
 import javax.validation.constraints.NotBlank;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.myntra.dto.AddressDto;
-import com.myntra.dto.CustomerAuthDto;
 import com.myntra.dto.CustomerDto;
 import com.myntra.dto.StringInputDto;
 import com.myntra.exception.MyntraException;
 import com.myntra.service.declaration.CustomerDetailsService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -63,6 +60,12 @@ public class CustomerDetailsController {
 	@ApiOperation(value = "To get all user addresses for an account", response = Boolean.class)
 	public ResponseEntity<List<AddressDto>> getAddress()throws MyntraException {
 		return new ResponseEntity<>(customerDetailsService.getAddress(),HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/delete-acc")
+	@ApiOperation(value = "To delete user account", response = Boolean.class)
+	public ResponseEntity<Boolean> deleteAcc()throws MyntraException {
+		return new ResponseEntity<>(customerDetailsService.deleteAcc(),HttpStatus.OK);
 	}
 	
 }
