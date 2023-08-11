@@ -8,7 +8,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.myntra.Constants;
-import com.myntra.entity.BlockedJwt;
 import com.myntra.repository.BlockedJwtRepo;
 import com.myntra.service.CustomUserDetailsService;
 import java.io.IOException;
@@ -36,7 +35,12 @@ public class JwtFilter extends OncePerRequestFilter {
 		String username = null;
 		if (authHeader != null && authHeader.startsWith(Constants.JWT_HEADER_PREFIX)) {
 			token = authHeader.substring(7);
-			username = jwtHelper.extractUserName(token);
+			try {
+				username = jwtHelper.extractUserName(token);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
 		}
 
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

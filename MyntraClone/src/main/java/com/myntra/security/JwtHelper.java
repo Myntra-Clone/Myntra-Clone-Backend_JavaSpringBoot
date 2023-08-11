@@ -7,9 +7,7 @@ import java.util.Map;
 import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
 import com.myntra.Constants;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -51,10 +49,7 @@ public class JwtHelper {
 	}
 
 	private String createToken(Map<String, Object> claims, String email) {
-		return Jwts.builder()
-				.setClaims(claims)
-				.setSubject(email)
-				.setIssuedAt(new Date(System.currentTimeMillis()))
+		return Jwts.builder().setClaims(claims).setSubject(email).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + Constants.JWT_VALIDITY))
 				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
 	}

@@ -1,5 +1,7 @@
 package com.myntra.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -16,4 +18,5 @@ public class BlockedJwt {
 
 	@Id
 	private String jwt;
+	private Date expirationTime;
 }

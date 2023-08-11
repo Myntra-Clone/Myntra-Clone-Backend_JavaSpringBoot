@@ -15,5 +15,7 @@ public interface CustomerDetailsService {
 	List<AddressDto> getAddress() throws MyntraException;
 	AddressDto addAddress(AddressDto addressDto) throws MyntraException;
 	Boolean deleteAcc() throws MyntraException;
+	CustomerDto editDetails(CustomerDto customerDto)throws MyntraException;
+	AddressDto editAddress(AddressDto addressDto) throws MyntraException;
 
 }

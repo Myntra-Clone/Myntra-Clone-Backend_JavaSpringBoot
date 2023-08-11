@@ -99,4 +99,28 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 		return true;
 	}
 
+	@Override
+	public CustomerDto editDetails(CustomerDto customerDto) throws MyntraException {
+		Customer customer =modelMapper.map(customerDto,Customer.class);
+		if(customerRepository.existsById(customer.getUserId())) {
+		customerRepository.save(customer);
+		return customerDto;
+		}
+		else {
+			throw new MyntraException("INVALID.USER.ID", HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@Override
+	public AddressDto editAddress(AddressDto addressDto) throws MyntraException {
+		Address address=modelMapper.map(addressDto,Address.class);
+		if(addressRepository.equals(address.getAddId())) {
+			addressRepository.save(address);
+		return addressDto;
+		}
+		else {
+			throw new MyntraException("INVALID.ADDRESS.ID", HttpStatus.NOT_FOUND);
+		}
+	}
+
 }

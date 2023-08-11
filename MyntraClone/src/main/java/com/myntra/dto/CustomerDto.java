@@ -1,13 +1,8 @@
 
 package com.myntra.dto;
 
-import java.util.List;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import com.myntra.entity.Address;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CustomerDto {
 
+	private int userId;
 	@NotBlank(message = "Email can not be blank")
 	private String email;
 	@NotNull
