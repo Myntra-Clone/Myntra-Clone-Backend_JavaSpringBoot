@@ -1,29 +1,22 @@
 package com.myntra.entity;
 
-import java.time.Instant;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@NoArgsConstructor
 @Entity
-@Table
-public class JwtRefreshToken {
+public class BlockedJwt {
 
-	
-	private String email;
 	@Id
-	private String token;
-	private Instant expirationDate;
-	
+	private String jwt;
+	private Date expirationTime;
 }

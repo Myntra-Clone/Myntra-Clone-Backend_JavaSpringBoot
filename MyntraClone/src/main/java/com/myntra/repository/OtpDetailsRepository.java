@@ -1,8 +1,9 @@
 package com.myntra.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
+
 import com.myntra.entity.OtpDetails;
 
-public interface OtpDetailsRepository extends MongoRepository<OtpDetails, String> {
+public interface OtpDetailsRepository extends CrudRepository<OtpDetails, String> {
 
 }

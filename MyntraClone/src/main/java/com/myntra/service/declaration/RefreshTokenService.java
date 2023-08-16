@@ -8,4 +8,6 @@ public interface RefreshTokenService {
 	String getRefreshToken(String emailDto);
 
 	String tokenValidation(StringInputDto refreshToken) throws MyntraException;
+
+	void deleteToken(String input);
 }

@@ -3,7 +3,6 @@ package com.myntra.controller;
 import java.security.Principal;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -80,8 +79,8 @@ public class CustomerController {
 	}
 
 	@PostMapping("/register")
-	@ApiOperation(value = "Register a new customer", response = JwtTokens.class)
-	public ResponseEntity<JwtTokens> customerRegisterApi(@Valid @RequestBody CustomerDto customerDto)
+	@ApiOperation(value = "Register a new customer", response = Object.class)
+	public ResponseEntity<Object> customerRegisterApi(@Valid @RequestBody CustomerDto customerDto)
 			throws MyntraException {
 		customerService.registerNewCustomer(customerDto);
 		if (authenticationManager.authenticate(
@@ -91,14 +90,14 @@ public class CustomerController {
 			String refreshToken = refreshTokenService.getRefreshToken(customerDto.getEmail());
 			return new ResponseEntity<>(new JwtTokens(jwtToken, refreshToken), HttpStatus.OK);
 		} else {
-			throw new BadCredentialsException("INVALID.CREDENTIAL");
+			return new ResponseEntity<>(environment.getProperty("INVALID.CREDENTIAL"),HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	// Login with email id & password
 	@PostMapping("/login")
-	@ApiOperation(value = "Login with user Credentials", response = String.class)
-	public ResponseEntity<JwtTokens> customerLoginApi(@Valid @RequestBody CustomerAuthDto customerAuthDto)
+	@ApiOperation(value = "Login with user Credentials", response = Object.class)
+	public ResponseEntity<Object> customerLoginApi(@Valid @RequestBody CustomerAuthDto customerAuthDto)
 			throws BadCredentialsException {
 		if (authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(customerAuthDto.getEmail(), customerAuthDto.getPassword()))
@@ -107,7 +106,7 @@ public class CustomerController {
 			String refreshToken = refreshTokenService.getRefreshToken(customerAuthDto.getEmail());
 			return new ResponseEntity<>(new JwtTokens(jwtToken, refreshToken), HttpStatus.OK);
 		} else {
-			throw new BadCredentialsException("INVALID.CREDENTIAL");
+			return new ResponseEntity<>(environment.getProperty("INVALID.CREDENTIAL"),HttpStatus.BAD_REQUEST);
 		}
 	}
 

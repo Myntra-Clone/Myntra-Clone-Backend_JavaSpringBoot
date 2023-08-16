@@ -14,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CustomerDto {
 
+	private int userId;
 	@NotBlank(message = "Email can not be blank")
 	private String email;
 	@NotNull
@@ -21,5 +22,6 @@ public class CustomerDto {
 	@NotNull(message = "Password can not be null")
 	private String password;
 	private Long phoneNumber;
+	private String gender;
 
 }
