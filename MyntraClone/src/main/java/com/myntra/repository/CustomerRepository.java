@@ -1,8 +1,9 @@
 package com.myntra.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import java.util.Optional;
+import org.springframework.data.repository.CrudRepository;
 import com.myntra.entity.Customer;
 
-public interface CustomerRepository extends MongoRepository<Customer, String> {
-	Customer findByEmail(String email);
+public interface CustomerRepository extends CrudRepository<Customer, Integer> {
+	Optional<Customer> findByEmail(String email);
 }

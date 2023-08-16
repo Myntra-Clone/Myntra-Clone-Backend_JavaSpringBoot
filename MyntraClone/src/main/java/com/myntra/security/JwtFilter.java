@@ -1,16 +1,14 @@
 package com.myntra.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import com.myntra.Constants;
-import com.myntra.exception.MyntraException;
+import com.myntra.repository.BlockedJwtRepo;
 import com.myntra.service.CustomUserDetailsService;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -26,6 +24,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
+	@Autowired
+	BlockedJwtRepo blockedJwt;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -33,24 +33,24 @@ public class JwtFilter extends OncePerRequestFilter {
 		String authHeader = request.getHeader("Authorization");
 		String token = null;
 		String username = null;
-		try {
 		if (authHeader != null && authHeader.startsWith(Constants.JWT_HEADER_PREFIX)) {
 			token = authHeader.substring(7);
-			username = jwtHelper.extractUserName(token);
+			try {
+				username = jwtHelper.extractUserName(token);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
 		}
 
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-			if (jwtHelper.validateToken(token, userDetails)) {
+			if (jwtHelper.validateToken(token, userDetails) && !blockedJwt.existsById(token)) {
 				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,null, null);
 				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authToken);
 			}
 		}
 		filterChain.doFilter(request, response);
-	}
-	catch(Exception ex) {
-		throw new ServletException(ex);
-	}
 	}
 }
