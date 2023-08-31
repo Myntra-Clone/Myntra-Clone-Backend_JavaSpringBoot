@@ -2,7 +2,7 @@
 
 ## Project Description
 
-This GitHub repository **Java-Spring Boot Backend Project - Myntra Clone**,is a Java Spring Boot application with MySQL database integration. This ongoing project aims to recreate the backend functionalities of the popular online fashion and lifestyle platform, Myntra. This project currently feature User Registration, login, logout, JWT authentication, OTP validation etc. You can find the REST API Swagger Documentaion after cloning and running the project in local machine.
+This GitHub repository **Java-Spring Boot Backend Project - Myntra Clone**,is a Java Spring Boot application with MySQL database integration. This ongoing project aims to recreate the backend functionalities of the popular online fashion and lifestyle platform, Myntra. This project currently feature **User Registration, login, logout, JWT authentication, OTP validation** etc. You can find the **REST API Swagger Documentaion** after cloning and running the project in local machine.
 ### Technologies Used
 
 - Java (SE v17)
