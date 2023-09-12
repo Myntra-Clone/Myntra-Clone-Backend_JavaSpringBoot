@@ -43,10 +43,10 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf().disable()
 				.authorizeHttpRequests()
-				.antMatchers("/auth/welcome","/my/**").authenticated()
+				.antMatchers("/api/auth/welcome","/api/my/**").authenticated()
 				.and()
 				.authorizeHttpRequests()
-				.antMatchers("/auth/**").permitAll()
+				.antMatchers("/api/auth/**").permitAll()
 				.and()
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -28,7 +28,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/my")
+@RequestMapping("/api/my")
 @Api(value = "Customer Details Controller : REST APIs")
 public class CustomerDetailsController {
 
@@ -45,58 +45,60 @@ public class CustomerDetailsController {
 
 	@DeleteMapping("/delete-acc")
 	@ApiOperation(value = "To delete user account", response = Boolean.class)
-	public ResponseEntity<Boolean> deleteAcc()throws MyntraException {
-		return new ResponseEntity<>(customerDetailsService.deleteAcc(),HttpStatus.OK);
+	public ResponseEntity<Boolean> deleteAcc() throws MyntraException {
+		return new ResponseEntity<>(customerDetailsService.deleteAcc(), HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/logout")
 	@ApiOperation(value = "user logout", response = String.class)
-	public ResponseEntity<String> logoutApi(@RequestBody @NotBlank StringInputDto stringInputDto,HttpServletRequest request) {
+	public ResponseEntity<String> logoutApi(@RequestBody @NotBlank StringInputDto stringInputDto,
+			HttpServletRequest request) {
 		refreshTokenService.deleteToken(stringInputDto.getInput());
 		logoutService.logout(request);
 		return new ResponseEntity<>(environment.getProperty("LOGGED.OUT"), HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/relogin")
 	@ApiOperation(value = "Password verification for already logged in user", response = Boolean.class)
-	public ResponseEntity<Boolean> customerLoginApi(@RequestBody @NotBlank StringInputDto stringInputDto) throws MyntraException {
+	public ResponseEntity<Boolean> customerLoginApi(@RequestBody @NotBlank StringInputDto stringInputDto)
+			throws MyntraException {
 		return new ResponseEntity<>(customerDetailsService.passwordVerify(stringInputDto), HttpStatus.OK);
 	}
-	
-	@PutMapping("/change-password")
+
+	@PutMapping("/password")
 	@ApiOperation(value = "To change user password", response = Boolean.class)
-	public ResponseEntity<Boolean> passwordChange(@RequestBody @NotBlank StringInputDto stringInputDto)throws MyntraException {
-		return new ResponseEntity<>(customerDetailsService.changePassword(stringInputDto),HttpStatus.OK);
+	public ResponseEntity<Boolean> passwordChange(@RequestBody @NotBlank StringInputDto stringInputDto)
+			throws MyntraException {
+		return new ResponseEntity<>(customerDetailsService.changePassword(stringInputDto), HttpStatus.OK);
 	}
-	
-	@GetMapping("/acc-details")
+
+	@GetMapping("/account")
 	@ApiOperation(value = "To check user account details", response = CustomerDto.class)
-	public ResponseEntity<CustomerDto> customerDetails(Principal principal){
+	public ResponseEntity<CustomerDto> customerDetails(Principal principal) {
 		return new ResponseEntity<>(customerDetailsService.customerDetails(principal.getName()), HttpStatus.OK);
 	}
-	
-	@PutMapping("/edit-acc-details")
+
+	@PutMapping("/account")
 	@ApiOperation(value = "To edit user acc details", response = CustomerDto.class)
-	public ResponseEntity<CustomerDto> editDetails(@RequestBody CustomerDto customerDto) throws MyntraException{
+	public ResponseEntity<CustomerDto> editDetails(@RequestBody CustomerDto customerDto) throws MyntraException {
 		return new ResponseEntity<>(customerDetailsService.editDetails(customerDto), HttpStatus.OK);
 	}
-	
-	@PostMapping("/add-address")
+
+	@PostMapping("/address")
 	@ApiOperation(value = "To add user addresses", response = AddressDto.class)
-	public ResponseEntity<AddressDto> addAddress(@RequestBody AddressDto addressDto)throws MyntraException {
-		return new ResponseEntity<>(customerDetailsService.addAddress(addressDto),HttpStatus.OK);
+	public ResponseEntity<AddressDto> addAddress(@RequestBody AddressDto addressDto) throws MyntraException {
+		return new ResponseEntity<>(customerDetailsService.addAddress(addressDto), HttpStatus.OK);
 	}
-	
-	@GetMapping("/getAlladdress")
+
+	@GetMapping("/addresses")
 	@ApiOperation(value = "To get all user addresses for an account", response = AddressDto.class)
-	public ResponseEntity<List<AddressDto>> getAddress()throws MyntraException {
-		return new ResponseEntity<>(customerDetailsService.getAddress(),HttpStatus.OK);
+	public ResponseEntity<List<AddressDto>> getAddress() throws MyntraException {
+		return new ResponseEntity<>(customerDetailsService.getAddress(), HttpStatus.OK);
 	}
-	
-	@PutMapping("/edit-address")
+
+	@PutMapping("/address")
 	@ApiOperation(value = "To edit user address details", response = AddressDto.class)
-	public ResponseEntity<AddressDto> editAddress(@RequestBody AddressDto addressDto) throws MyntraException{
+	public ResponseEntity<AddressDto> editAddress(@RequestBody AddressDto addressDto) throws MyntraException {
 		return new ResponseEntity<>(customerDetailsService.editAddress(addressDto), HttpStatus.OK);
 	}
-	
 }

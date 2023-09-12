@@ -25,41 +25,34 @@ import com.myntra.security.JwtHelper;
 import com.myntra.service.declaration.CustomerService;
 import com.myntra.service.declaration.RefreshTokenService;
 import com.myntra.service.declaration.OtpService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @Api(value = "Customer Controller : REST APIs") //    http://localhost:8500/myntra/swagger-ui/index.html#/
 public class CustomerController {
 
 	@Autowired
 	CustomerService customerService;
-
 	@Autowired
 	RefreshTokenService refreshTokenService;
-
 	@Autowired
 	Environment environment;
-
 	@Autowired
 	private JwtHelper jwtHelper;
-
 	@Autowired
 	AuthenticationManager authenticationManager;
-
 	@Autowired
 	OtpService otpService;
 
-
-	@PostMapping("/is-present")
+	@PostMapping("/email")
 	@ApiOperation(value = "To check if email id is present in database", response = Boolean.class)
 	public ResponseEntity<Boolean> customerIsPresent(@RequestBody @NotBlank StringInputDto stringInputDto) {
 		return new ResponseEntity<>(customerService.isPresent(stringInputDto), HttpStatus.OK);
 	}
 	
-	@PostMapping("/generate-otp")
+	@PostMapping("/generate")
 	@ApiOperation(value = "To generate Otp for email validation", response = String.class)
 	public ResponseEntity<String> generateEmailOtp(@RequestBody @NotBlank StringInputDto email){
 		Integer otp = otpService.generateOtp(email);
@@ -67,7 +60,7 @@ public class CustomerController {
 		return new ResponseEntity<>(environment.getProperty("OTP.SENT")+email.getInput(),HttpStatus.OK);
 	}
 	
-	@PostMapping("/validate-otp")
+	@PostMapping("/validate")
 	@ApiOperation(value = "To validate Otp for email validation", response = Boolean.class)
 	public ResponseEntity<String> validateEmailOtp(@RequestBody OtpDetailsDto otpDetailsDto ){
 		boolean validated = otpService.validateOtp(otpDetailsDto);
